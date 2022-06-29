@@ -1,0 +1,13 @@
+{
+  "name": "hermes-playlist-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/kangseungho-hub/hermes-playlist-server.git",
+  "author": "seungho-hub <63999413+kangseungho-hub@users.noreply.github.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.18"
+  }
+}
