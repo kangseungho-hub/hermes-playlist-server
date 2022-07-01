@@ -1,0 +1,30 @@
+{
+	//save시 저장된 tsconfig.json에 대한 모든 file을 생성한다.
+	"compileOnSave" : true,
+
+	//말그대로 compiler 설정
+	"compilerOptions" : { 
+		"module" : "commonjs",
+		//compile할 ES 버전
+		"target" : "es5", 
+		//프로젝트의 compile할 directory
+		"rootDir" : "src",
+		//컴파일 후 js file이 생성되는 위치
+		"outDir" : "build"
+	},
+
+	//default : include, files가 지정되어 있지 않다면 exclude에 지정된 것을 제외한 모든 
+	//typescript file을 포함하는 directory와 하위 directory에 포함시킨다.
+	//"allowJS" 가 true로 설정되어있다면 .js, .jsx 파일도 포함
+	"include" : [
+    "src/*.ts",
+		"src/**/*.ts",
+	],
+
+	//default : node_modules, bower_componenets, jspm_packages, <outDir>
+	//files, include에서 지정한 file이 참조하는 file은 exclude되지 않는다.
+	//include로 포함된 file도 exclude를 통해 filtering할 수 있음. (files 에 포함된 file들은 exclude 불가.)
+	"exclude" : [
+		"node_modules",
+	]
+}
