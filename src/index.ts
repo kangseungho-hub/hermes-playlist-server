@@ -1,23 +1,22 @@
-import * as express from "express"
 import * as fs from "fs"
 import { join } from "path"
 require("dotenv").config()
-const app = express()
 
 import * as https from "https"
+import { initApp } from "./initialize"
+const app = initApp()
 
-app.get("/", (req, res) => {
-    res.send("hello world!")
-})
+const PORT = process.env.PORT || 8000
 
 const server = https.createServer(
     {
         key: fs.readFileSync(join(__dirname, "../ssl/private.key")),
         cert: fs.readFileSync(join(__dirname, "../ssl/root.crt")),
     },
-    app)
+    app
+)
 
-server.listen(8000, () => {
+server.listen(PORT, () => {
     console.log(process.env.MODE == "development" ? "###DEVELOPMENT Mode" : "###production Mode")
-    console.log("listening on port 8000")
+    console.log(`server listening on ${process.env.PORT}`)
 })
