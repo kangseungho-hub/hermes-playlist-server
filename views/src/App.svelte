@@ -1,12 +1,22 @@
 <script>
   export let name;
+  import Router, { location, link } from "svelte-spa-router";
+
+  import Signup from "./auth/Signup.svelte";
+  import Signin from "./auth/Signin.svelte";
 </script>
 
 <main>
-  <h1>Hello</h1>
-  <p>
-    Visit <a href="https://svelte.dev/tutorial">Svelte tutorials</a> to learn
-  </p>
+  <!-- <a href="/#/signin">signIn</a>
+  <a href="/#/signup">signUp</a> -->
+  <a href="/auth/google">signin with google</a>
+
+  <Router
+    routes={{
+      "/signin": Signin,
+      "/signup": Signup,
+    }}
+  />
 </main>
 
 <style lang="scss">
