@@ -3,3 +3,4 @@ yarn-error.log
 .env
 ssl/
 build/
+DB/
