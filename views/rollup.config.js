@@ -44,7 +44,7 @@ export default {
 
         // Watch the `public` directory and refresh the
         // browser on changes when not in production
-        !production &&
+        // !production &&
         livereload({
             watch: "public",
             verbose: true,

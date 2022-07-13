@@ -1,92 +1,48 @@
 import { Router } from "express"
 import * as qs from "qs"
 const authRouter = Router()
-import { getTokens } from './auth_api';
+import { getAuthCodeURL, getUserProfile, RegisteredAPILabels } from './auth_api';
+import { userManager, User } from "../Models/user"
+import { request } from "http";
 
-const GOOGLE_AUTH_CODE_URL = "https://accounts.google.com/o/oauth2/v2/auth"
-const GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token"
+authRouter.get("/:provider", (req, res) => {
+    const provider = req.params.provider
 
-const KAKAO_AUTH_CODE_URL = "https://kauth.kakao.com/oauth/authorize"
-const KAKAO_TOKEN_URL = "https://kauth.kakao.com/oauth/token"
-
-authRouter.get("/google", (req, res) => {
-    const googleOAuthURL = generateURL(GOOGLE_AUTH_CODE_URL, {
-        client_id: process.env.GOOGLE_CLIENT_ID,
-        redirect_uri: "https://localhost:8000/auth/google/callback",
-        response_type: "code",
-        scope: "https://www.googleapis.com/auth/userinfo.profile"
-    })
-
-    res.redirect(googleOAuthURL)
+    //redirect client to conscent screen
+    res.redirect(getAuthCodeURL(provider))
 })
 
-authRouter.get("/google/callback", (req, res) => {
+authRouter.get("/:provider/callback", async (req, res) => {
     const { code } = req.query
+    const provider = req.params.provider
 
-    if (code) {
-        getTokens({
-            code: code.toString(),
-            provider: "google",
-        })
-            .then((tokens) => {
-                res.send("done")
-            })
-            .catch(err => {
-                console.log(err)
-                res.send(err)
-            })
+    //if user request to unregistered oauth service
+    if (RegisteredAPILabels.includes(provider) == false) {
+        res.status(400).send("잘못된 요청입니다.")
     }
 
-    res.send
-})
-
-
-authRouter.get("/kakao", (req, res) => {
-    const kakaoAuthURL = generateURL(KAKAO_AUTH_CODE_URL, {
-        client_id: process.env.KAKAO_CLIENT_ID,
-        redirect_uri: "https://localhost:8000/auth/kakao/callback",
-        response_type: "code"
-    })
-    res.redirect(kakaoAuthURL)
-})
-
-authRouter.get("/kakao/callback", (req, res) => {
-    const { code } = req.query
-
-    if (code) {
-        getTokens({
-            code: code.toString(),
-            provider: "kakao",
-        })
-            .then((tokens) => {
-                res.send("done")
-            })
-            .catch(err => {
-                res.send(err)
-            })
+    //if code not sended as parameter
+    // will be one of the cases below
+    // 1. client try to access /auth/google/callback directly withour pass through conscent screen
+    // 2. user failed authentication from oauth server  
+    if (code == undefined) {
+        res.status(400).send("잘못된 요청입니다.")
     }
 
+    //get user profile from oauth server
+    let profile = await getUserProfile({ code: code.toString(), provider })
+
+    let user = await userManager.getUser(profile.id)
+
+    //if user already exist
+    if (user) {
+        res.send(user)
+        return
+    }
+
+    user = await userManager.createUser(profile)
+
+    res.redirect("/")
 })
-
-authRouter.get("/facebook", (req, res) => {
-})
-
-
 
 export default authRouter
-
-
-function generateURL(url: string, params?: Object): string {
-    let result: string = "";
-
-    //host
-    if (url[url.length - 1] == '/') {
-        url = url.substring(0, url.length - 1)
-    }
-
-    const query = qs.stringify(params)
-
-    result = url + "?" + query;
-
-    return result
-}

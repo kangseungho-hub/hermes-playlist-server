@@ -1,13 +1,12 @@
 import * as express from "express"
-import * as expressSvelte from "express-svelte"
 import { join } from "path"
 
 import * as session from "express-session"
 import * as MySQLStore from "express-mysql-session"
+import authRouter from "./auth/route"
 
 export function initApp() {
     const app = express()
-
 
     initSessionStore(app)
     initMiddleware(app)
@@ -15,9 +14,9 @@ export function initApp() {
 
     bindRouter(app)
 
-    //render single page
+    //spa app 
     app.get("/", (req, res) => {
-        res.sendFile(join(__dirname, "../views/", "public", "index.html"))
+        res.sendFile(join(__dirname, "../views/", "public", "main.html"))
     })
 
     return app
@@ -36,6 +35,9 @@ function initSessionStore(app: express.Application) {
 
     app.use(session({
         secret: process.env.APP_SECRET,
+        cookie: {
+            secure: true
+        },
         store: sessionStore,
         resave: false,
         saveUninitialized: false
@@ -54,9 +56,6 @@ function initStaticPath(app: express.Application) {
     app.use(express.static(join(__dirname, "../views/public")))
 }
 
-import authRouter from "./auth/router"
-
 function bindRouter(app: express.Application) {
-    //route /auth/*
     app.use("/auth", authRouter)
 }
