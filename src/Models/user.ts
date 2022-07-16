@@ -38,8 +38,6 @@ class UserManager extends DBManager {
     createUser(profile: UserProfile): Promise<User> {
         return new Promise<User>((resolve, reject) => {
             const q = `INSERT INTO user (id, username, email, pfp) VALUES ('${profile.id}', '${profile.username}', '${profile.email}', '${profile.pfp}')`
-            console.log(q)
-            console.log(profile)
             this.query(q, (err, results, fields) => {
                 if (err) {
                     reject(err)

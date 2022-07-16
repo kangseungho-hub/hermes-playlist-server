@@ -1,14 +1,16 @@
 :root {
-    --sig: #fc7323;
+    --sig: #F78600;
 }
 
 :root[color-theme="dark"] {
     --font-color: #fff;
+    --font-blur-color: #878789;
     --font-sub-color: gray;
     --font-reserve-color: rgb(14, 14, 14);
     --bg-color: #16151a;
     --bg-sub-color: rgb(70, 70, 70);
     --thin-border: 1px solid #222227;
+    --reverse-font-color: #16151a;
 }
 
 :root[color-theme="light"] {

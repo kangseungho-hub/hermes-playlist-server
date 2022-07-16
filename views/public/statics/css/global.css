@@ -5,6 +5,8 @@
     box-sizing: border-box;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: inherit;
+    transition-duration: 0.3s;
+    color: var(--font-color)
 }
 
 body {
@@ -38,4 +40,8 @@ input:focus {
 
 span {
     text-align: center;
+}
+
+.btn:hover {
+    cursor: pointer;
 }
