@@ -1,9 +1,8 @@
 import { Router } from "express"
-import * as qs from "qs"
 const authRouter = Router()
 import { getAuthCodeURL, getUserProfile, RegisteredAPILabels } from './auth_api';
 import { userManager, User } from "../Models/user"
-import { request } from "http";
+import { sign } from "jsonwebtoken"
 
 authRouter.get("/:provider", (req, res) => {
     const provider = req.params.provider
@@ -35,14 +34,36 @@ authRouter.get("/:provider/callback", async (req, res) => {
     let user = await userManager.getUser(profile.id)
 
     //if user already exist
-    if (user) {
-        res.send(user)
-        return
+    if (!user) {
+        user = await userManager.createUser(profile)
     }
 
-    user = await userManager.createUser(profile)
+
+    //generate encrypted jwt
+    const jwt = sign({
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        pfp: user.pfp,
+    },
+        //not use file
+        process.env.APP_SECRET, //secret
+        {
+            algorithm: "HS256",
+
+        }
+    )
+
+    //send encrypted jwt to client cookie
+    res.cookie("token", jwt, {
+        httpOnly: true,
+        secure: true //only https
+    })
 
     res.redirect("/")
+
 })
+
+
 
 export default authRouter

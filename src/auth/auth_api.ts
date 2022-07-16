@@ -24,7 +24,7 @@ const API_INFO = {
         redirect_url: "https://localhost:8000/auth/google/callback",
     },
     "kakao": {
-        app_key: undefined,
+        app_key: undefined, //kakao api는 app key를 요구하지 않음
         client_id: process.env.KAKAO_CLIENT_ID,
         client_secret: process.env.KAKAO_CLIENT_SECRET,
 
@@ -149,7 +149,6 @@ export function getUserProfile(auth_code: authorization_code): Promise<UserProfi
     return new Promise((resolve, reject) => {
         getTokens(auth_code)
             .then((token_resp) => {
-                console.log(token_resp.data.access_token)
                 const accessToken = token_resp.data.access_token
 
                 return API_INFO[auth_code.provider].getUserProfile(accessToken)

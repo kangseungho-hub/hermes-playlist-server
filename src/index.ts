@@ -1,9 +1,11 @@
-import * as fs from "fs"
-import { join } from "path"
+import { initSocketIO } from './initializeSocketIO';
+const fs = require("fs")
+const { join } = require("path")
 require("dotenv").config()
+const expressListRoutes = require("express-list-routes")
 
-import * as https from "https"
-import { initApp } from "./initialize"
+const https = require("https")
+const { initApp } = require("./initializeApp")
 const app = initApp()
 
 const PORT = process.env.PORT || 8000
@@ -16,7 +18,12 @@ const server = https.createServer(
     app
 )
 
+initSocketIO(server)
+
+
+//route하고있는 경로를 출력
+console.log(expressListRoutes(app))
+
 server.listen(PORT, () => {
-    console.log(process.env.MODE == "development" ? "###DEVELOPMENT Mode" : "###production Mode")
     console.log(`server listening on ${process.env.PORT}`)
 })
