@@ -4,9 +4,11 @@
 
 :root[color-theme="dark"] {
     --font-color: #fff;
+    --font-sub-color: gray;
     --font-reserve-color: rgb(14, 14, 14);
-    --bg-color: rgb(19, 19, 19);
+    --bg-color: #16151a;
     --bg-sub-color: rgb(70, 70, 70);
+    --thin-border: 1px solid #222227;
 }
 
 :root[color-theme="light"] {

@@ -4,6 +4,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Noto Sans KR', sans-serif;
+    font-size: inherit;
 }
 
 body {
@@ -29,7 +30,6 @@ button:hover {
 input {
     border-radius: 0.5rem;
     border: none;
-    padding: 0.5rem 1rem;
 }
 
 input:focus {

@@ -1,7 +1,7 @@
 {
 	//save시 저장된 tsconfig.json에 대한 모든 file을 생성한다.
 	"compileOnSave" : true,
-
+	
 	//말그대로 compiler 설정
 	"compilerOptions" : { 
 		"module" : "commonjs",
@@ -17,7 +17,7 @@
 	//typescript file을 포함하는 directory와 하위 directory에 포함시킨다.
 	//"allowJS" 가 true로 설정되어있다면 .js, .jsx 파일도 포함
 	"include" : [
-    "src/*.ts",
+    	"src/*.ts",
 		"src/**/*.ts",
 	],
 
@@ -26,5 +26,6 @@
 	//include로 포함된 file도 exclude를 통해 filtering할 수 있음. (files 에 포함된 file들은 exclude 불가.)
 	"exclude" : [
 		"node_modules",
+		"views/src/*",
 	]
 }
