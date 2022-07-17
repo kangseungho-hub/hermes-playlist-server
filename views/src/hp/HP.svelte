@@ -2,6 +2,10 @@
   import Topbar from "./Topbar.svelte";
   import Sidebar from "./Sidebar.svelte";
   import Content from "./Content.svelte";
+
+  import socket from "./socket";
+
+  socket.send("test", "test data");
 </script>
 
 <main>

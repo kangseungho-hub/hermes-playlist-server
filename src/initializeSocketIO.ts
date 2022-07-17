@@ -7,21 +7,32 @@ export function initSocketIO(server) {
     ioServer.on("connection", (socket) => {
 
         socket.use((e, next) => {
-            const cookies = parse(socket.request.headers.cookie)
+            const headers = socket.request.headers
+
+            if (headers.cookie == undefined) {
+                console.log("cookie is empty")
+                socket.emit("authentication-failed")
+                return
+            }
+
+            const cookies = parse(headers.cookie)
 
             const jwt = cookies.token
 
             if (jwt == undefined) {
-                console.log("client does not authenticated!")
-                next()
+                console.log("jwt is undefined")
+                socket.emit("authentication-failed")
                 return
             }
 
-            const user = verify(jwt, process.env.APP_SECRET, {
+            verify(jwt, process.env.APP_SECRET, {
                 algorithms: ["HS256"]
+            }, (err, user) => {
+                if (err) {
+                    socket.emit("authentication-failed")
+                }
+                next()
             })
-
-            next()
         })
     })
 

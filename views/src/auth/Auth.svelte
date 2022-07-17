@@ -100,6 +100,7 @@
           flex-direction: column;
           gap: 1em;
           input {
+            padding: 1em;
             background-color: var(--bg-sub-color);
             color: var(--font-color);
           }
