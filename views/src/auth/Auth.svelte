@@ -127,25 +127,36 @@
             flex-basis: 5%;
             font-size: 1.3em;
             margin-right: 1em;
+            color: white;
           }
           span {
             flex-basis: 95%;
+            color: white;
           }
         }
         .google-oauth-btn {
           background-color: #db4437;
-          color: var(--font-color);
         }
         .facebook-oauth-btn {
           background-color: #4267b2;
-          color: var(--font-color);
         }
         .amazon-oauth-btn {
           background-color: #ff9900;
-          color: var(--font-color);
+          i {
+            color: black;
+          }
+          span {
+            color: black;
+          }
         }
         .kakao-oauth-btn {
           background-color: #ffe812;
+          i {
+            color: black;
+          }
+          span {
+            color: black;
+          }
         }
       }
     }
