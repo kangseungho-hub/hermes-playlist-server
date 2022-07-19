@@ -4,11 +4,13 @@
   import Content from "./Content.svelte";
 
   import socket from "./socket";
+  //socket의 요청에 middleware가 실행되기 때문에 일단
 
-  socket.send("test", "test data");
+  import { authentication } from "../auth/store";
 </script>
 
 <main>
+  s
   <section id="topbar">
     <Topbar />
   </section>
@@ -16,7 +18,7 @@
   <section id="sidebar">
     <Sidebar />
   </section>
-  <section class="content">
+  <section id="content">
     <Content />
   </section>
 </main>
