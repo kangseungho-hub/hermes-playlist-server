@@ -5,12 +5,10 @@ import { verify } from "jsonwebtoken"
 export function initSocketIO(server) {
     const ioServer = new Server(server)
     ioServer.on("connection", (socket) => {
-
         socket.use((e, next) => {
             const headers = socket.request.headers
 
             if (headers.cookie == undefined) {
-                console.log("cookie is empty")
                 socket.emit("authentication-failed")
                 return
             }
@@ -20,7 +18,6 @@ export function initSocketIO(server) {
             const jwt = cookies.token
 
             if (jwt == undefined) {
-                console.log("jwt is undefined")
                 socket.emit("authentication-failed")
                 return
             }
@@ -31,9 +28,15 @@ export function initSocketIO(server) {
                 if (err) {
                     socket.emit("authentication-failed")
                 }
+                socket.emit("authentication-success", (user))
                 next()
             })
         })
     })
 
 }
+
+function isAuthenticated(cookies) {
+
+}
+
