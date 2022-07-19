@@ -8,6 +8,8 @@ import authRouter from "./auth/route"
 import { User } from "./Models/user"
 const cookiesParser = require("cookie-parser")
 
+import * as morgan from "morgan"
+
 declare module "express-session" {
     export interface SessionData {
         user: User
@@ -21,7 +23,7 @@ export function initApp() {
     // initSessionStore(app)
     initMiddleware(app)
     initStaticPath(app)
-
+    initLogger(app)
     bindRouter(app)
 
     app.use(cookiesParser())
@@ -67,6 +69,15 @@ function initStaticPath(app: express.Application) {
     //svelte index.html only use build/bundle.js build/bundle.css
     // + global.css
     app.use(express.static(join(__dirname, "../views/public")))
+}
+
+function initLogger(app: express.Application) {
+    if (process.env.MODE == "production") {
+        app.use(morgan("combined"))
+        return
+    }
+
+    app.use(morgan(":method [:url] :status :res[content-length] - :response-time ms :date"))
 }
 
 function bindRouter(app: express.Application) {
