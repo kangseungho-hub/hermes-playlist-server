@@ -1,4 +1,4 @@
-import { initSocketIO } from './initializeSocketIO';
+import { initSocketIOServer } from './initializeSocketIO';
 const fs = require("fs")
 const { join } = require("path")
 require("dotenv").config()
@@ -18,7 +18,7 @@ const server = https.createServer(
     app
 )
 
-initSocketIO(server)
+initSocketIOServer(server)
 
 
 //route하고있는 경로를 출력
