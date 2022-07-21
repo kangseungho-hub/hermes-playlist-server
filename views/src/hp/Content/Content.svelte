@@ -5,6 +5,7 @@
   let videos = [];
   //listen search form in topbar
   socket.on("r-search", (_videos) => {
+    console.log(_videos);
     videos = _videos;
   });
 </script>
@@ -15,11 +16,11 @@
     {#each videos as video}
       <li>
         <div class="thumbnail-wrapper">
-          <YoutubePlayer videoId={video.id.videoId} />
+          <YoutubePlayer videoId={video.id} />
         </div>
         <div class="information">
-          <p class="title">{video.snippet.title}</p>
-          <span class="description">{video.snippet.description}</span>
+          <p class="title">{video.title}</p>
+          <span class="description">{video.description}</span>
         </div>
       </li>
     {/each}

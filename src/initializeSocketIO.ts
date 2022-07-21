@@ -52,8 +52,19 @@ function initSocket(socket: Socket) {
             type: "video"
 
         }, (videos: Array<any>) => {
+
+            const results = videos.map(video => {
+                return {
+                    id: video.id.videoId,
+                    publishedAt: video.snippet.publishedAt,
+                    title: video.snippet.title,
+                    description: video.snippet.description,
+                    thumbnail: video.snippet.thumbnails.high,
+                    channelTitle: video.snippet.channelTitle
+                }
+            })
             //extract id from videos information
-            socket.emit("r-search", videos)
+            socket.emit("r-search", results)
         })
     })
 }
