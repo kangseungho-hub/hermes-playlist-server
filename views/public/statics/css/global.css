@@ -11,6 +11,12 @@
 
 body {
     background-color: var(--bg-color);
+    transition: none;
+    height: 100vh;
+}
+
+ul {
+    list-style: none;
 }
 
 a {
