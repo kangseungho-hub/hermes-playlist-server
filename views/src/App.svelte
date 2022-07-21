@@ -18,4 +18,8 @@
   * {
     color: white;
   }
+
+  main {
+    height: inherit;
+  }
 </style>

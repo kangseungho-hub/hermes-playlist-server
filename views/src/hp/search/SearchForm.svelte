@@ -4,7 +4,7 @@
   let searchQuery;
 
   function search() {
-    console.log(searchQuery);
+    socket.emit("search", searchQuery);
   }
 </script>
 

@@ -49,6 +49,8 @@ function initSocket(socket: Socket) {
         hermes.search({
             q,
             part: "id,snippet",
+            type: "video"
+
         }, (videos: Array<any>) => {
             //extract id from videos information
             socket.emit("r-search", videos)
