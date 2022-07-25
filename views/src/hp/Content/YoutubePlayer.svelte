@@ -1,13 +1,22 @@
 <script>
-  import { onMount } from "svelte";
+  import { onMount, onDestroy, beforeUpdate, afterUpdate, tick } from "svelte";
 
   export let videoId;
 
+  let player;
+
+  beforeUpdate(async () => {
+    console.log("App beforeUpdate");
+  });
+
+  afterUpdate(async () => {
+    player.loadVideoById(videoId, 0);
+  });
+
   onMount(() => {
-    let player = new YT.Player(videoId, {
+    player = new YT.Player(videoId, {
       height: "300px",
       width: "300px",
-      videoId,
     });
   });
 </script>

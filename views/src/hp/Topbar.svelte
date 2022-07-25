@@ -6,7 +6,6 @@
 
   userInfo.subscribe((_userInfo) => {
     user = _userInfo;
-    console.log(user);
   });
 </script>
 

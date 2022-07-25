@@ -3,10 +3,12 @@
   import YoutubePlayer from "./YoutubePlayer.svelte";
 
   let videos = [];
+  let players = [];
+
   //listen search form in topbar
   socket.on("r-search", (_videos) => {
-    console.log(_videos);
     videos = _videos;
+    console.log(videos);
   });
 </script>
 

@@ -1,0 +1,17 @@
+<script type="text/javascript" id="www-widgetapi-script" src="https://www.youtube.com/s/player/011af516/www-widgetapi.vflset/www-widgetapi.js" async=""></script>
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<div id="test"></div>
+<button>remove</button>
+<script>
+    let player = new YT.Player("test", {
+        height: '360',
+        width: '640',
+        videoId: "M7lc1UVf-VE"
+    })
+
+    document.querySelector("button").addEventListener("click", () => {
+        console.log("remove video")
+        player.destroy()
+    })
+</script>
